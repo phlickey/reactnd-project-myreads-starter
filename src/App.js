@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import Book from './Book'
+import Bookshelf from './Bookshelf'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -44,51 +44,22 @@ class BooksApp extends React.Component {
                    </div>
                 )}/>
                 <Route exact path="/" render={()=>(
-                
-                <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                        {current.map((book)=>(
-                            <Book key={book.id} thumbnail={book.imageLinks.thumbnail} authors={book.authors} title={book.title} subtitle={book.subtitle} />
-                          ))}
-                    </ol>
+                  <div className="list-books">
+                    <div className="list-books-title">
+                      <h1>MyReads</h1>
+                    </div>
+                    <div className="list-books-content">
+                      <div>
+                        <Bookshelf name="Currently Reading" books={current}></Bookshelf>
+                        <Bookshelf name="Want to Read" books={want}></Bookshelf>
+                        <Bookshelf name="Read" books={read}></Bookshelf>
+                      </div>
+                    </div>
+                    <div className="open-search">
+                      <Link to="/search">Add a book</Link>
+                    </div>
                   </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {want.map((book)=>(
-                            <Book key={book.id} thumbnail={book.imageLinks.thumbnail} authors={book.authors} title={book.title} subtitle={book.subtitle} />
-                          ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {read.map((book)=>(
-                            <Book key={book.id} thumbnail={book.imageLinks.thumbnail} authors={book.authors} title={book.title} subtitle={book.subtitle} />
-                          ))
-                      }
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="open-search">
-              <Link to="/search">Add a book</Link>
-            </div>
-          </div>
-                )}/>
+                )} />
               
         </div>
     )
