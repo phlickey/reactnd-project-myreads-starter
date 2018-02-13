@@ -1,12 +1,13 @@
-import React from 'react'
-const Book = (props)=>{
+import React, {Component} from 'react'
+class Book extends Component{
+    render(){
     return (
         <li>
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${props.thumbnail}")` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.thumbnail}")` }}></div>
                             <div className="book-shelf-changer">
-                                <select>
+                                <select onChange={e=>{console.log(e)} } value={this.props.shelf}>
                                     <option value="none" disabled>Move to...</option>
                                     <option value="currentlyReading">Currently Reading</option>
                                     <option value="wantToRead">Want to Read</option>
@@ -15,10 +16,11 @@ const Book = (props)=>{
                                 </select>
                             </div>
                         </div>
-                    <div className="book-title">{props.title} <br /><small>{props.subtitle}</small></div>
-                <div className="book-authors">{props.authors.join(', ')}</div>
+                    <div className="book-title">{this.props.title} <br /><small>{this.props.subtitle}</small></div>
+                <div className="book-authors">{this.props.authors.join(', ')}</div>
             </div>
         </li>
     )
+    }
 }
 export default Book
