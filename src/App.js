@@ -6,14 +6,15 @@ import './App.css'
 
 class BooksApp extends React.Component {
     state = {
-        books : []
+        books : [],
+        results: [],
+        searchQuery: ''
     }
 
     componentWillMount() {
         BooksAPI.getAll().then(books=>{
             books.map(book=>{book.isDirty=false})
-            console.log(books)
-            this.setState({books});
+            this.setState({books})
         });
     }
     handleBookShelfChange = (book, newShelf)=>{
@@ -35,12 +36,17 @@ class BooksApp extends React.Component {
         return state
         })
     }
+    searchBooks = (searchQuery)=>{
+        this.setState({searchQuery})
+        BooksAPI.search(searchQuery)
+            .then((results)=>{
+            this.setState({results})
+        })
+    }
     render() {
-        console.log(this.state.books)
         let current = this.state.books.filter(book=>(book.shelf==="currentlyReading"))
         let want = this.state.books.filter(book=>(book.shelf==="wantToRead"))
         let read = this.state.books.filter(book=>(book.shelf==="read"))
-        console.log(current);
         return (
             <div>
                 <Route exact path="/search" render={()=>(
@@ -56,11 +62,15 @@ class BooksApp extends React.Component {
                                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                                   you don't find a specific author or title. Every search is limited by search terms.
                                 */}
-                                <input type="text" placeholder="Search by title or author"/>
+                                <input type="text" placeholder="Search by title or author" value={this.state.searchQuery} onChange={(e)=>{this.searchBooks(e.target.value)}}/>
                             </div>
                         </div>
                         <div className="search-books-results">
-                            <ol className="books-grid"></ol>
+                            <ol className="books-grid">
+                                {this.state.results.length>0 && (
+                                    <Bookshelf name="Results" books={this.state.results} handleBookShelfChange={this.handleBookShelfChange}></Bookshelf>
+                                )}
+                            </ol>
                         </div>
                    </div>
                 )}/>
