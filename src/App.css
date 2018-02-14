@@ -115,8 +115,16 @@ body, .app {
   flex-wrap: wrap;
 }
 .books-grid li {
+  transition: filter 0.5s ease;    
   padding: 10px 15px;
   text-align: left;
+  filter: saturate(100%);
+}
+
+.books-grid li.dirty{
+    filter: saturate(0%);
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .book {

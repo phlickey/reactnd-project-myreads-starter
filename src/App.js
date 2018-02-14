@@ -11,7 +11,8 @@ class BooksApp extends React.Component {
 
     componentWillMount() {
         BooksAPI.getAll().then(books=>{
-            console.log(books);
+            books.map(book=>{book.isDirty=false})
+            console.log(books)
             this.setState({books});
         });
     }
@@ -21,13 +22,21 @@ class BooksApp extends React.Component {
             state.books.map((b)=>{
                if (b.id===book.id){
                    b.shelf = book.shelf
+                   b.isDirty = true
                }
             })
-            console.log(state)
-            return state
+        BooksAPI.update(book, newShelf)
+            .then(()=>{
+                this.setState((state)=>{
+                    state.books.map((b)=>b.isDirty=false)
+                    return state
+                })
+            })
+        return state
         })
     }
     render() {
+        console.log(this.state.books)
         let current = this.state.books.filter(book=>(book.shelf==="currentlyReading"))
         let want = this.state.books.filter(book=>(book.shelf==="wantToRead"))
         let read = this.state.books.filter(book=>(book.shelf==="read"))

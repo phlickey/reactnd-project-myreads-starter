@@ -3,7 +3,7 @@ class Book extends Component{
     render(){
         let {book, handleBookShelfChange} = this.props
         return (
-            <li>
+            <li className={book.isDirty?'dirty':'clean'}>
                 <div className="book">
                     <div className="book-top">
                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
