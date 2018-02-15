@@ -2,6 +2,7 @@ import React from 'react'
 import {Route, Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Bookshelf from './Bookshelf'
+import Header from './Header'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -81,9 +82,7 @@ class BooksApp extends React.Component {
                 )}/>
                 <Route exact path="/" render={()=>(
                   <div className="list-books">
-                    <div className="list-books-title">
-                      <h1>MyReads</h1>
-                    </div>
+                    <Header title={"My Reads"} />
                     <div className="list-books-content">
                       <div>
                         <Bookshelf name="Currently Reading" books={current} handleBookShelfChange={this.handleBookShelfChange}></Bookshelf>
