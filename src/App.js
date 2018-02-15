@@ -22,6 +22,8 @@ class BooksApp extends React.Component {
             this.setState({books: cleanBooks})
         });
     }
+
+
     handleBookShelfChange = (book, newShelf)=>{
         book.shelf = newShelf
         let bookExists = false
@@ -46,6 +48,8 @@ class BooksApp extends React.Component {
         return state
         })
     }
+    
+    
     searchBooks = (searchQuery)=>{
         this.setState({searchQuery})
         BooksAPI.search(searchQuery)
@@ -53,6 +57,8 @@ class BooksApp extends React.Component {
             this.setState({results})
         })
     }
+    
+    
     render() {
         let current = this.state.books.filter(book=>(book.shelf==="currentlyReading"))
         let want = this.state.books.filter(book=>(book.shelf==="wantToRead"))
