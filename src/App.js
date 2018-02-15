@@ -14,8 +14,12 @@ class BooksApp extends React.Component {
 
     componentWillMount() {
         BooksAPI.getAll().then(books=>{
-            books.map(book=>{book.isDirty=false})
-            this.setState({books})
+            let cleanBooks = books.map(book=>{
+                let cleanBook = book
+                cleanBook.isDirty = false
+                return cleanBook
+            })
+            this.setState({books: cleanBooks})
         });
     }
     handleBookShelfChange = (book, newShelf)=>{
