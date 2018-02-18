@@ -26,28 +26,27 @@ class BooksApp extends React.Component {
     }
 
 
-    handleBookShelfChange = (book, newShelf)=>{
-        book.shelf = newShelf
-        let bookExists = false
-        this.setState((state)=>{
-            state.books.map((b)=>{
-               if (b.id===book.id){
-                   b.shelf = book.shelf
-                   b.isDirty = true
-                   bookExists
-               }
-               if (!bookExists){
-                   state.books.push(book)
-               }
-            })
-        BooksAPI.update(book, newShelf)
-            .then(()=>{
-                this.setState((state)=>{
-                    state.books.map((b)=>b.isDirty=false)
-                    return state
-                })
-            })
-        return state
+  handleBookShelfChange=(book, newShelf) => {
+    /** We optimistically render the book on the target
+    *   and signal to the user in the UI that the update is
+    *   yet to be confirmed. Then once we get an api
+    *   response, we confirm that our change is reflected
+    *   on the server. Once this is done, we update the UI
+    *   and allow the user to edit the book again.
+    */
+    BooksAPI.update(book, newShelf)
+      .then((data) => {
+        this.setState((state) => {
+          let cleanBooks=state.books.map((b) => {
+            let cleanBook=b
+            if (typeof data[b.shelf]!=="undefined"){
+              cleanBook.isDirty = !(data[b.shelf].filter((id) => (id === b.id)).length === 1)
+            }
+            return cleanBook
+          })
+          let newState=state;
+          newState.books=cleanBooks;
+          return newState
         })
     }
     
