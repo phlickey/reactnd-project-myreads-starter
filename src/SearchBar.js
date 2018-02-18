@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 export default function SearchBar(props){
-  let {searchQuery, searchBooks} = props
+  let {searchQuery, handleSearchBooks} = props
   return(
     <div className="search-books-bar" >
       <Link className="close-search" to="/" >Close</Link>
@@ -15,7 +15,7 @@ export default function SearchBar(props){
           }
           onChange={
             (e) => {
-              searchBooks(e.target.value)
+              handleSearchBooks(e.target.value)
             }
           }
         /> 

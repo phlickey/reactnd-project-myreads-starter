@@ -1,10 +1,8 @@
 import React from 'react'
 import {Route,Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import Bookshelf from './Bookshelf'
-import Header from './Header'
-import SearchBar from './SearchBar'
-import SearchResults from './SearchResults'
+import SearchBooks from './SearchBooks'
+import ListBooks from './ListBooks'
 import './App.css'
 class BooksApp extends React.Component {
   state={
@@ -71,7 +69,7 @@ class BooksApp extends React.Component {
   }
 
 
-  searchBooks=(searchQuery) => {
+  handleSearchBooks=(searchQuery) => {
     this.setState({
       searchQuery
     })
@@ -93,32 +91,24 @@ class BooksApp extends React.Component {
         <Route exact path="/search"
           render={
             () => (
-              <div className="search-books" >
-               <SearchBar
-                 searchQuery={this.state.searchQuery}
-                 searchBooks={this.searchBooks}
-               />
-               <SearchResults 
-                 results={this.state.results} 
-                 handleBookShelfChange={this.handleBookShelfChange}    
-               />
-              </div>
-          )
-        }/> 
+              <SearchBooks 
+                searchQuery={this.state.searchQuery} 
+                handleSearchBooks={this.handleSearchBooks} 
+                results={this.state.results} 
+                handleBookShelfChange={this.handleBookShelfChange} 
+              />
+              )
+            }
+        /> 
         <Route exact path="/"
           render={
             () => (
-              <div className="list-books" >
-                <Header title={"My Reads"}/>
-                <div className="list-books-content" >
-                  <Bookshelf name="Currently Reading" books={current} handleBookShelfChange={this.handleBookShelfChange}/>
-                  <Bookshelf name="Want to Read" books={want} handleBookShelfChange={this.handleBookShelfChange} /> 
-                  <Bookshelf name="Read" books={read} handleBookShelfChange={this.handleBookShelfChange} /> 
-                </div>
-                <div className="open-search" >
-                  <Link to="/search" > Add a book </Link> 
-                </div> 
-              </div>
+              <ListBooks 
+                current={current} 
+                want={want} 
+                read={read} 
+                handleBookShelfChange={this.handleBookShelfChange} 
+              />
             )
           }
         />
