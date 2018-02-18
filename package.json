@@ -10,9 +10,8 @@
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "postinstall": "react-scripts build",
-    "start": "node ./node_modules/serve/bin/serve.js ./build",
-    "start-dev": "react-scripts start",
+    "serve": "node ./node_modules/serve/bin/serve.js ./build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
