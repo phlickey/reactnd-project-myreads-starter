@@ -12,8 +12,13 @@ git clone https://github.com/phlickey/reactnd-project-myreads-starter.git
 cd reactnd-project-myreads-starter
 npm i
 ```
+To start the final production build, run
 
-From the starter code I separated out hte following components in the expected way:
+```bash
+npm run serve
+```
+
+From the starter code I separated out the following components in the expected way:
 Header - Handles displaying the titlebar
 Book - Handles the logic of rendering a single book.
 Bookshelf - Handles the logic of rendering a titled collection of multiple books.
