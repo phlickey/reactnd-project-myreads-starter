@@ -49,22 +49,14 @@ class BooksApp extends React.Component {
           return newState
         })
       })
-    book.shelf=newShelf
-    let bookExists=false
     this.setState((state) => {
-      let newState={}
-      newState.books=state.books.map((b) => {
-        if (b.id === book.id) {
-          b.shelf=book.shelf
-          b.isDirty=true
-          bookExists=true
-        }
-        return b
-      })
-      if (!bookExists) {
-        newState.books.push(book)
+      return {
+        ...state, 
+        books: state.books.filter(b=>b.id!==book.id).concat(
+          {...book, 
+           shelf: newShelf, 
+           isDirty: true})
       }
-      return newState
     })
   }
 
