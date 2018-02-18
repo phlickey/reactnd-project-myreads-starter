@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
-class Book extends Component{
-    render(){
-        let {book, handleBookShelfChange} = this.props
+import React from 'react'
+
+export default function Book (props){
+        let {book, handleBookShelfChange} = props
         return (
             <li className={book.isDirty?'dirty':'clean'}>
                 <div className="book">
@@ -22,6 +22,5 @@ class Book extends Component{
                 </div>
             </li>
         )
-    }
+    
 }
-export default Book

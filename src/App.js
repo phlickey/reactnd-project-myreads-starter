@@ -1,29 +1,31 @@
 import React from 'react'
-import {Route, Link} from 'react-router-dom'
+import {Route,Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Bookshelf from './Bookshelf'
 import Header from './Header'
 import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import './App.css'
-
 class BooksApp extends React.Component {
-    state = {
-        books : [],
-        results: [],
-        searchQuery: ''
-    }
+  state={
+    books: [],
+    results: [],
+    searchQuery: ''
+  }
 
-    componentWillMount() {
-        BooksAPI.getAll().then(books=>{
-            let cleanBooks = books.map(book=>{
-                let cleanBook = book
-                cleanBook.isDirty = false
-                return cleanBook
-            })
-            this.setState({books: cleanBooks})
-        });
-    }
+
+  componentWillMount() {
+    BooksAPI.getAll().then(books => {
+      let cleanBooks=books.map(book => {
+        let cleanBook=book
+        cleanBook.isDirty=false
+        return cleanBook
+      })
+      this.setState({
+        books: cleanBooks
+      })
+    });
+  }
 
 
   handleBookShelfChange=(book, newShelf) => {
@@ -48,14 +50,35 @@ class BooksApp extends React.Component {
           newState.books=cleanBooks;
           return newState
         })
-    }
-    
-    
-    searchBooks = (searchQuery)=>{
-        this.setState({searchQuery})
-        BooksAPI.search(searchQuery)
-            .then((results)=>{
-            this.setState({results})
+      })
+    book.shelf=newShelf
+    let bookExists=false
+    this.setState((state) => {
+      let newState={}
+      newState.books=state.books.map((b) => {
+        if (b.id === book.id) {
+          b.shelf=book.shelf
+          b.isDirty=true
+          bookExists=true
+        }
+        return b
+      })
+      if (!bookExists) {
+        newState.books.push(book)
+      }
+      return newState
+    })
+  }
+
+
+  searchBooks=(searchQuery) => {
+    this.setState({
+      searchQuery
+    })
+    BooksAPI.search(searchQuery)
+      .then((results) => {
+        this.setState({
+          results
         })
       })
   }
