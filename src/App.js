@@ -14,7 +14,7 @@ class BooksApp extends React.Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
     BooksAPI.getAll().then(books => {
       let cleanBooks=books.map(book => {
         let cleanBook=book
