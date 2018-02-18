@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Book (props){
   let {book, handleBookShelfChange} = props
-  let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : "https://via.placeholder.com/128x193?text=No+Cover+Found"
+  let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : `https://via.placeholder.com/128x193?text=${book.title.replace(/ /,"+")}`
   return (
     <li className={book.isDirty?'dirty':'clean'}>
       <div className="book">
