@@ -1,8 +1,9 @@
 import React from 'react'
-import {Route,Link} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
 import ListBooks from './ListBooks'
+import ErrorToast from './ErrorToast'
 import './App.css'
 class BooksApp extends React.Component {
   state={
@@ -107,6 +108,7 @@ class BooksApp extends React.Component {
             )
           }
         />
+        {(this.state.error && <ErrorToast errorMessage={this.state.errorMessage}/>)}
       </div>
     )
   }

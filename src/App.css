@@ -189,3 +189,15 @@ li{
     0% {transform: scale(0.1); opacity:0;},
     100% {transform: scale(1); opacity:1}
 }
+
+div.error-toast{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    padding: 15px;
+    width: 50vw;
+    border-radius: 2px;
+    color: white;
+    background-color: rgba(255,127,0,0.8);
+    animation: appear 0.25s cubic-bezier(0, 0, 0, 0.99);
+}
