@@ -2,11 +2,12 @@ import React from 'react'
 
 export default function Book (props){
         let {book, handleBookShelfChange} = props
+        let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : "https://via.placeholder.com/128x193?text=No+Cover+Found"
         return (
             <li className={book.isDirty?'dirty':'clean'}>
                 <div className="book">
                     <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${thumbnail}")` }}></div>
                                 <div className="book-shelf-changer">
                                     <select onChange={(e)=>{handleBookShelfChange(book, e.target.value)}} value={book.shelf?book.shelf:"none"}>
                                         <option value="none" disabled>Move to...</option>
