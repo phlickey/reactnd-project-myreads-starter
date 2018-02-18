@@ -8,7 +8,9 @@ class BooksApp extends React.Component {
   state={
     books: [],
     results: [],
-    searchQuery: ''
+    searchQuery: '',
+    error: false,
+    errorMessage : ''
   }
 
 
@@ -34,32 +36,33 @@ class BooksApp extends React.Component {
     *   on the server. Once this is done, we update the UI
     *   and allow the user to edit the book again.
     */
-    BooksAPI.update(book, newShelf)
-      .then((data) => {
-        this.setState((state) => {
-          let cleanBooks=state.books.map((b) => {
-            let cleanBook=b
-            if (typeof data[b.shelf]!=="undefined"){
-              cleanBook.isDirty = !(data[b.shelf].filter((id) => (id === b.id)).length === 1)
-            }
-            return cleanBook
-          })
-          let newState=state;
-          newState.books=cleanBooks;
-          return newState
-        })
-      })
+    let oldState = JSON.parse(JSON.stringify(this.state))
     this.setState((state) => {
       return {
-        ...state, 
+        ...state,
         books: state.books.filter(b=>b.id!==book.id).concat(
           {...book, 
            shelf: newShelf, 
            isDirty: true})
       }
     })
+    BooksAPI.update(book, newShelf)
+      .then((data) => {
+        //If everything was successful we just need to remove the dirty status from the book
+        this.setState({
+          books: this.state.books.map(b => {
+             if (b.id === book.id) return { ...b, isDirty: false }
+             else return b
+          })
+        })
+      }).catch(e=>{
+        console.error(`Unable to set new shelf ${e.message}`)
+        this.setState({...oldState, 
+                       error: true, 
+                       errorMessage: e.message
+                      })
+      })
   }
-
 
   handleSearchBooks=(searchQuery) => {
     this.setState({
