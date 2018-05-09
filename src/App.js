@@ -9,7 +9,6 @@ class BooksApp extends React.Component {
   state={
     books: [],
     results: [],
-    searchQuery: '',
     error: false,
     errorMessage : ''
   }
@@ -66,9 +65,6 @@ class BooksApp extends React.Component {
   }
 
   handleSearchBooks=(searchQuery) => {
-    this.setState({
-      searchQuery
-    })
     BooksAPI.search(searchQuery)
       .then((results) => {
         this.setState({
@@ -88,7 +84,6 @@ class BooksApp extends React.Component {
           render={
             () => (
               <SearchBooks 
-                searchQuery={this.state.searchQuery} 
                 handleSearchBooks={this.handleSearchBooks} 
                 results={this.state.results} 
                 handleBookShelfChange={this.handleBookShelfChange} 

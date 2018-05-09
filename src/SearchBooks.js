@@ -3,11 +3,10 @@ import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 
 export default function SearchBooks (props){
-  let {searchQuery, handleSearchBooks, results, handleBookShelfChange} = props
+  let {handleSearchBooks, results, handleBookShelfChange} = props
   return(
     <div className="search-books" >
      <SearchBar
-       searchQuery={searchQuery}
        handleSearchBooks={handleSearchBooks}
      />
      <SearchResults 

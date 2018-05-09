@@ -4,6 +4,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.2.2",
+    "react-throttle": "^0.3.0",
     "serve": "^6.4.10"
   },
   "devDependencies": {
