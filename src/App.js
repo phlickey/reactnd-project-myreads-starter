@@ -35,7 +35,7 @@ class BooksApp extends React.Component {
         if (b.id === book.id){
           return {...b, shelf: newShelf, isDirty: true};
         } else{
-          return {...b};
+          return {...b, shelf: "none"};
         } 
       })
   }
