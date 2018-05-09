@@ -3,6 +3,7 @@ import React from 'react'
 export default function Book (props){
   let {book, handleBookShelfChange} = props
   let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : `https://via.placeholder.com/128x193?text=${book.title.replace(/ /,"+")}`
+  typeof(book.shelf)!=="undefined"&&(book.shelf==="none")&&delete book.shelf;
   return (
     <li className={book.isDirty?'dirty':'clean'}>
       <div className="book">
