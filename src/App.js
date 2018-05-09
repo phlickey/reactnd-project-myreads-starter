@@ -27,7 +27,25 @@ class BooksApp extends React.Component {
     });
   }
 
-
+  updateBooksArrayInitial = (books, book, newShelf)=>{
+    return books.filter(b=>b.id!==book.id).concat({...book, shelf: newShelf, isDirty: true});
+  }
+  updateResultsArrayInitial = (results, book, newShelf) => {
+    return results.map(b=>{
+        if (b.id === book.id){
+          return {...b, shelf: newShelf, isDirty: true};
+        } else{
+          return {...b};
+        } 
+      })
+  }
+  cleanBookArray = (books, bookToClean) => {
+    return books.map(b => {
+             if (b.id === bookToClean.id) return { ...b, isDirty: false }
+             else return b
+          })
+  }
+  
   handleBookShelfChange=(book, newShelf) => {
     /** We optimistically render the book on the target
     *   and signal to the user in the UI that the update is
@@ -40,20 +58,16 @@ class BooksApp extends React.Component {
     this.setState((state) => {
       return {
         ...state,
-        books: state.books.filter(b=>b.id!==book.id).concat(
-          {...book, 
-           shelf: newShelf, 
-           isDirty: true})
+        books: this.updateBooksArrayInitial(state.books, book, newShelf),
+        results: this.updateResultsArrayInitial(state.results, book, newShelf)
       }
-    })
+    });
     BooksAPI.update(book, newShelf)
       .then((data) => {
         //If everything was successful we just need to remove the dirty status from the book
         this.setState({
-          books: this.state.books.map(b => {
-             if (b.id === book.id) return { ...b, isDirty: false }
-             else return b
-          })
+          books: this.cleanBookArray(this.state.books, book),
+          results: this.cleanBookArray(this.state.results, book),
         })
       }).catch(e=>{
         console.error(`Unable to set new shelf ${e.message}`)
@@ -67,8 +81,18 @@ class BooksApp extends React.Component {
   handleSearchBooks=(searchQuery) => {
     BooksAPI.search(searchQuery)
       .then((results) => {
+        let updatedResults = results.map((result)=>{
+          let updatedResult = {...result};
+          for (let i = 0; i < this.state.books.length; i++){
+            if (result.id === this.state.books[i].id){
+              updatedResult.shelf = this.state.books[i].shelf;
+              return updatedResult;
+            }
+          }
+          return updatedResult;
+        })
         this.setState({
-          results
+          results: updatedResults
         })
       })
   }
